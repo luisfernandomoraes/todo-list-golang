@@ -1,0 +1,62 @@
+version: "3.3"
+services:
+  db:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+      
+  # db-adminer:
+  #   image: adminer
+  #   ports:
+  #     - 8888:8080
+  
+  todo-service:
+    build: ./
+    links:
+      - fluentd
+    env_file:
+      - .env
+    ports:
+      - "5100:5100"
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: todo-service
+
+  fluentd:
+    build: ./fluentd
+    user: root
+    container_name: fluentd
+    privileged: true
+    environment:
+      - FLUENTD_OPT=-vv
+    volumes:
+      - ./fluentd/conf:/fluentd/etc
+    links:
+      - "elasticsearch"
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
+# docker run -it --rm -u 0 --privileged  -v $(pwd)/fluentd/conf:/fluentd/etc -v /var/lib/docker/containers:/var/lib/docker/containers todo-list-golang-fluentd /bin/bash
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.1
+    container_name: elasticsearch
+    environment:
+      - "discovery.type=single-node"
+    expose:
+      - "9200"
+    ports:
+      - "9200:9200"
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.13.1
+    links:
+      - "elasticsearch"
+    ports:
+      - "5601:5601"
