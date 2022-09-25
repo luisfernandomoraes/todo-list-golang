@@ -6,10 +6,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/luisfernandomoraes/todo-list-golang/infraestructure/database/migrations"
-	logger "github.com/luisfernandomoraes/todo-list-golang/infraestructure/logs"
-	"go.uber.org/zap"
+	"github.com/luisfernandomoraes/todo-list-golang/infraestructure/logger"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -21,13 +19,7 @@ func StartDB() {
 
 	database, err := gorm.Open(postgres.Open(str), &gorm.Config{})
 	if err != nil {
-		// logger.GetLogger().WithFields(logrus.Fields{
-		// 	"environment": serviceconfig.Environment,
-		// 	"use-case":    "load-database",
-		// 	"type":        "technical",
-		// }).Error(err.Error())
-		uuid := uuid.New()
-		logger.Fatal("An error ocurred at open conection to PostgresDB.", zap.Error(err), zap.String("guid", uuid.String()))
+		logger.GetLogger().Fatal().Err(err).Msg("An error occurred at open connection to PostgresDB.")
 	}
 
 	db = database
