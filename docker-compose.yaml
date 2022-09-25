@@ -22,9 +22,6 @@ services:
 
   fluentd:
     build: ./fluentd
-    user: root
-    container_name: fluentd
-    privileged: true
     environment:
       - FLUENTD_OPT=-vv
     volumes:
@@ -33,8 +30,7 @@ services:
       - "elasticsearch"
     ports:
       - "24224:24224"
-      - "24224:24224/udp"
-# docker run -it --rm -u 0 --privileged  -v $(pwd)/fluentd/conf:/fluentd/etc -v /var/lib/docker/containers:/var/lib/docker/containers todo-list-golang-fluentd /bin/bash
+      - "24224:24224/udp"      
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.13.1
