@@ -1,4 +1,4 @@
-package logs
+package logger
 
 import (
 	"os"
@@ -22,6 +22,6 @@ func init() {
 	}
 }
 
-func GetLogger() zerolog.Logger {
-	return logger
+func GetLogger() *zerolog.Logger {
+	return &logger
 }

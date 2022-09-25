@@ -16,5 +16,5 @@
 
 * Gin <https://github.com/gin-gonic/gin>
 * Gorm <https://github.com/go-gorm/gorm>
-* Zap <https://github.com/uber-go/zap>
+* ZeroLog <https://github.com/rs/zerolog>
 * GoDotEnv <https://github.com/joho/godotenv>
