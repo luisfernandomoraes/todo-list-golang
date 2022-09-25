@@ -16,8 +16,6 @@ services:
   
   todo-service:
     build: ./
-    links:
-      - fluentd
     env_file:
       - .env
     ports:
