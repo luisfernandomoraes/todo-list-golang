@@ -5,6 +5,7 @@
 * API Versioning
 * Swagger
 * OpenTelemetry
+* Structured Logging
 * Load Testes
 * CI Pipeline
 
