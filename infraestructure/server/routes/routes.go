@@ -9,10 +9,10 @@ import (
 // @description     Todo List Golang swagger server
 // @termsOfService  http://swagger.io/terms/
 
-// @host      api-hml.orbitpages.com/workspaces
+// ConfigRoutes @host     localhost
 // @BasePath  /v1
 func ConfigRoutes(router *gin.Engine) *gin.Engine {
-	main := router.Group("v1") //TODO logger
+	main := router.Group("v1")
 	{
 		item := main.Group("item")
 		{

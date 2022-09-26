@@ -13,12 +13,11 @@ var logger zerolog.Logger
 
 func init() {
 	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
-
-	value := envs.GetEnvironmentVariableByKey("ENVIRONMENT")
-	if strings.ToUpper(value) == "DEVELOPMENT" {
+	environment := envs.GetEnvironmentVariableByKey("ENVIRONMENT")
+	if strings.ToUpper(environment) == "DEVELOPMENT" {
 		logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 	} else {
-		logger = zerolog.New(os.Stderr).With().Timestamp().Caller().Logger()
+		logger = zerolog.New(os.Stderr).With().Str("environment", environment).Timestamp().Caller().Logger()
 	}
 }
 

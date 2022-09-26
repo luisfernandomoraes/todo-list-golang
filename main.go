@@ -10,7 +10,7 @@ import (
 
 func main() {
 	envs.CheckEnvironmentVariables()
-	logger.GetLogger().Info().Msg("Starting todo-list-golang service")
+	logger.GetLogger().Info().Str("use-case", "infra").Msg("Starting todo-list-golang service")
 	database.StartDB()
 	s := server.NewServer()
 	s.Run()

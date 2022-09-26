@@ -2,7 +2,6 @@ package database
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"time"
 
@@ -30,12 +29,7 @@ func StartDB() {
 
 	migrations.RunMigrations(db)
 
-	// logger.GetLogger().WithFields(logrus.Fields{
-	// 	"environment": serviceconfig.Environment,
-	// 	"use-case":    "load-database",
-	// 	"type":        "technical",
-	// }).Info("Loaded database successfully")
-	log.Println("Loaded database successfully")
+	logger.GetLogger().Info().Str("use-case", "infra/database").Msg("Loaded database successfully")
 }
 
 func CloseConn() error {

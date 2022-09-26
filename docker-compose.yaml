@@ -8,8 +8,12 @@ services:
       POSTGRES_DB: ${DB_NAME}
     ports:
       - "5432:5432"
+
   todo-service:
     build: ./
+    environment:
+      - DB_HOST=db
+      - GIN_MODE=release
     env_file:
       - .env
     ports:
@@ -22,8 +26,6 @@ services:
 
   fluentd:
     build: ./fluentd
-    environment:
-      - FLUENTD_OPT=-vv
     volumes:
       - ./fluentd/conf:/fluentd/etc
     links:
