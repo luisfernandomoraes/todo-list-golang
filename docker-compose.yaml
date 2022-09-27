@@ -3,9 +3,9 @@ services:
   db:
     image: postgres:13-alpine
     environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: P@ssw0rd
+      POSTGRES_DB: todo_list_golang_db
     ports:
       - "5432:5432"
 
@@ -13,9 +13,10 @@ services:
     build: ./
     environment:
       - DB_HOST=db
+      - ENVIRONMENT=PRODUCTION
       - GIN_MODE=release
     env_file:
-      - .env
+      - ./src/.env
     ports:
       - "5100:5100"
     logging:
